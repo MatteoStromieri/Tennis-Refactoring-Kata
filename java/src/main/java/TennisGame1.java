@@ -21,7 +21,7 @@ public class TennisGame1 implements TennisGame {
     public String getScore() {
         String score = "";
         int tempScore=0;
-        if (m_score1==m_score2)
+        if (score1EqualsScore2())
         {
             switch (m_score1)
             {
@@ -72,5 +72,9 @@ public class TennisGame1 implements TennisGame {
             }
         }
         return score;
+    }
+
+    private boolean score1EqualsScore2() {
+        return m_score1 == m_score2;
     }
 }
