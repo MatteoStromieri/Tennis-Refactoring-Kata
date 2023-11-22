@@ -27,38 +27,29 @@ public class TennisGame1 implements TennisGame {
             score = getAdvantageScore();
         else
         {
-            score = getPointsList();
+            score = getScoreStringFromScore(m_score1) + " - " + getScoreStringFromScore(m_score2);
         }
         return score;
     }
 
-    private String getPointsList() {
-        String score="";
+    private String getScoreStringFromScore(int score) {
+        String scoreString = "";
         int tempScore;
-        for (int i = 1; i<3; i++)
-        {
-            if (i==1)
-                tempScore = m_score1;
-            else {
-                score +="-";
-                tempScore = m_score2;}
-            switch(tempScore)
-            {
-                case 0:
-                    score +="Love";
-                    break;
-                case 1:
-                    score +="Fifteen";
-                    break;
-                case 2:
-                    score +="Thirty";
-                    break;
-                case 3:
-                    score +="Forty";
-                    break;
-            }
+        switch (score) {
+            case 0:
+                scoreString += "Love";
+                break;
+            case 1:
+                scoreString += "Fifteen";
+                break;
+            case 2:
+                scoreString += "Thirty";
+                break;
+            case 3:
+                scoreString += "Forty";
+                break;
         }
-        return score;
+        return scoreString;
     }
 
     private String getAdvantageScore() {
