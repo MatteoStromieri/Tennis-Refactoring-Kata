@@ -1,10 +1,10 @@
 
 public class TennisGame1 implements TennisGame {
     
-    private int m_score1 = 0;
-    private int m_score2 = 0;
-    private String player1Name;
-    private String player2Name;
+    private int player1Score = 0;
+    private int player2Score = 0;
+    private final String player1Name;
+    private final String player2Name;
 
     public TennisGame1(String player1Name, String player2Name) {
         this.player1Name = player1Name;
@@ -13,48 +13,40 @@ public class TennisGame1 implements TennisGame {
 
     public void wonPoint(String playerName) {
         if (playerName.equals(player1Name))
-            m_score1 += 1;
+            player1Score += 1;
         else
-            m_score2 += 1;
+            player2Score += 1;
     }
 
     public String getScore() {
         String score;
-        int tempScore=0;
         if (isTie())
             score = getTieScore();
         else if (isOneScoreGreaterEqual4())
             score = getAdvantageScore();
         else
         {
-            score = getScoreStringFromScore(m_score1) + "-" + getScoreStringFromScore(m_score2);
+            score = getScoreBoard();
         }
         return score;
     }
 
+    private String getScoreBoard() {
+        return getScoreStringFromScore(player1Score) + "-" + getScoreStringFromScore(player2Score);
+    }
+
     private String getScoreStringFromScore(int score) {
-        String scoreString = "";
-        int tempScore;
-        switch (score) {
-            case 0:
-                scoreString += "Love";
-                break;
-            case 1:
-                scoreString += "Fifteen";
-                break;
-            case 2:
-                scoreString += "Thirty";
-                break;
-            case 3:
-                scoreString += "Forty";
-                break;
-        }
-        return scoreString;
+        return switch (score) {
+            case 0 -> "Love";
+            case 1 -> "Fifteen";
+            case 2 -> "Thirty";
+            default -> "Forty";
+        };
     }
 
     private String getAdvantageScore() {
         String score;
-        int minusResult = m_score1 - m_score2;
+        int minusResult = player1Score - player2Score;
         if (minusResult == 1)
             score = "Advantage " + player1Name;
         else if (minusResult == -1)
@@ -67,31 +59,19 @@ public class TennisGame1 implements TennisGame {
     }
 
     private boolean isOneScoreGreaterEqual4() {
-        return m_score1 >= 4 || m_score2 >= 4;
+        return player1Score >= 4 || player2Score >= 4;
     }
 
     private boolean isTie() {
-        return m_score1 == m_score2;
+        return player1Score == player2Score;
     }
 
     private String getTieScore() {
-        String score;
-        switch (m_score1)
-        {
-            case 0:
-                    score = "Love-All";
-                break;
-            case 1:
-                    score = "Fifteen-All";
-                break;
-            case 2:
-                    score = "Thirty-All";
-                break;
-            default:
-                    score = "Deuce";
-                break;
-
-        }
-        return score;
+        return switch (player1Score) {
+            case 0 -> "Love-All";
+            case 1 -> "Fifteen-All";
+            case 2 -> "Thirty-All";
+            default -> "Deuce";
+        };
     }
 }
